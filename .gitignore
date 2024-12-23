@@ -1,0 +1,6 @@
+.env
+db_storage
+**/__pycache__
+dataset_cut.csv
+dataset.csv
+.DS_Store
