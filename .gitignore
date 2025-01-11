@@ -3,3 +3,4 @@ db_storage
 **/__pycache__
 dataset
 .DS_Store
+similar-movies

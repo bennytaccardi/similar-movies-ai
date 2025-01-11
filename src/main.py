@@ -3,7 +3,7 @@ import grpc
 import json
 import services.service_pb2 as service_pb2
 import services.service_pb2_grpc as service_pb2_grpc
-from services.vectordb_service import load_and_persist_dataset, load_persisted_index
+from services.vectordb_service import load_persisted_index
 import openai
 from dotenv import load_dotenv
 import os
@@ -15,15 +15,9 @@ openai.api_key = api_key
 
 class MyService(service_pb2_grpc.MyServiceServicer):
     def GetJson(self, request, context):
-        args = sys.argv[1:]
-        # index = None
-        # if len(args) == 1 and args[0] == 'load':
-        #     index = load_and_persist_dataset('movies_metadata.csv')
-        # if not index:
-        #     index = load_persisted_index()
         index = load_persisted_index()
         query_engine = index.as_query_engine()
-
+        
         response = query_engine.query("""
         I need a list of the 5 most similar films to 'Nosferatu', ranked by similarity. 
         Focus on factors such as:

@@ -73,14 +73,6 @@ def load_and_persist_dataset(csv_path):
         )
     """)
     
-    # cursor.execute(f"""
-    #     CREATE TABLE IF NOT EXISTS data_embeddings (
-    #         id SERIAL PRIMARY KEY,
-    #         doc_id TEXT,
-    #         embedding vector(384)
-    #     )
-    # """)
-    
     # Get existing doc_ids
     cursor.execute("SELECT doc_id FROM movie_metadata")
     existing_ids = set(row[0] for row in cursor.fetchall())
