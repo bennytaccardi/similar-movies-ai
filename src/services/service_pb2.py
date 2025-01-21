@@ -24,17 +24,17 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\rservice.proto\"\x07\n\x05\x45mpty\"!\n\x0cJsonResponse\x12\x11\n\tjson_data\x18\x01 \x01(\t2-\n\tMyService\x12 \n\x07GetJson\x12\x06.Empty\x1a\r.JsonResponseb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\rservice.proto\"$\n\x0bJsonRequest\x12\x15\n\rsearch_string\x18\x01 \x01(\t\"!\n\x0cJsonResponse\x12\x11\n\tjson_data\x18\x01 \x01(\t23\n\tMyService\x12&\n\x07GetJson\x12\x0c.JsonRequest\x1a\r.JsonResponseb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'service_pb2', _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
-  _globals['_EMPTY']._serialized_start=17
-  _globals['_EMPTY']._serialized_end=24
-  _globals['_JSONRESPONSE']._serialized_start=26
-  _globals['_JSONRESPONSE']._serialized_end=59
-  _globals['_MYSERVICE']._serialized_start=61
-  _globals['_MYSERVICE']._serialized_end=106
+  _globals['_JSONREQUEST']._serialized_start=17
+  _globals['_JSONREQUEST']._serialized_end=53
+  _globals['_JSONRESPONSE']._serialized_start=55
+  _globals['_JSONRESPONSE']._serialized_end=88
+  _globals['_MYSERVICE']._serialized_start=90
+  _globals['_MYSERVICE']._serialized_end=141
 # @@protoc_insertion_point(module_scope)

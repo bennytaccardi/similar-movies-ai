@@ -1,10 +1,12 @@
 syntax = "proto3";
 
 service MyService {
-  rpc GetJson (Empty) returns (JsonResponse);
+  rpc GetJson (JsonRequest) returns (JsonResponse);
 }
 
-message Empty {}
+message JsonRequest {
+  string search_string = 1; // Add the parameter you want to accept
+}
 
 message JsonResponse {
   string json_data = 1;

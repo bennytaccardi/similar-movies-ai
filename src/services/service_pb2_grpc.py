@@ -36,7 +36,7 @@ class MyServiceStub(object):
         """
         self.GetJson = channel.unary_unary(
                 '/MyService/GetJson',
-                request_serializer=service__pb2.Empty.SerializeToString,
+                request_serializer=service__pb2.JsonRequest.SerializeToString,
                 response_deserializer=service__pb2.JsonResponse.FromString,
                 _registered_method=True)
 
@@ -55,7 +55,7 @@ def add_MyServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'GetJson': grpc.unary_unary_rpc_method_handler(
                     servicer.GetJson,
-                    request_deserializer=service__pb2.Empty.FromString,
+                    request_deserializer=service__pb2.JsonRequest.FromString,
                     response_serializer=service__pb2.JsonResponse.SerializeToString,
             ),
     }
@@ -84,7 +84,7 @@ class MyService(object):
             request,
             target,
             '/MyService/GetJson',
-            service__pb2.Empty.SerializeToString,
+            service__pb2.JsonRequest.SerializeToString,
             service__pb2.JsonResponse.FromString,
             options,
             channel_credentials,

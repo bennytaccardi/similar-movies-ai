@@ -7,7 +7,7 @@ from services.vectordb_service import load_persisted_index
 import openai
 from dotenv import load_dotenv
 import os
-import sys
+from utils import build_prompt
 
 load_dotenv()
 api_key = os.getenv('OPENAI_API_KEY')
@@ -15,22 +15,12 @@ openai.api_key = api_key
 
 class MyService(service_pb2_grpc.MyServiceServicer):
     def GetJson(self, request, context):
+        search_string = request.search_string
+        print(search_string)
         index = load_persisted_index()
         query_engine = index.as_query_engine()
         
-        response = query_engine.query("""
-        I need a list of the 5 most similar films to 'Nosferatu', ranked by similarity. 
-        Focus on factors such as:
-        - Genre (e.g., sci-fi, drama, action)
-        - Tone and Atmosphere (e.g., dark, lighthearted, suspenseful)
-        - Themes (e.g., redemption, survival, family)
-        - Plot Elements (e.g., time travel, heists, coming-of-age)
-        - Character Dynamics (e.g., mentor-student, rivalries, ensemble casts)
-        - Visual Style (if applicable, e.g., stylized, realistic, animated)
-        - Director/Screenwriter Similarities (if relevant)
-
-        Provide the list in descending order of similarity, with a short explanation for each recommendation highlighting the key overlapping elements with '<film-title>'.
-        """)
+        response = query_engine.query(build_prompt(search_string))
 
         # JSON data to return
         data = {"message": str(response), "status": "success"}
