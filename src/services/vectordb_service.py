@@ -21,6 +21,7 @@ db_host = os.getenv('DB_HOST')
 db_port = os.getenv('DB_PORT')
 db_name = os.getenv('DB_NAME')
 connection_string = f"postgresql://{db_user}:{db_pwd}@{db_host}:{db_port}/{db_name}"
+# connection_string = f"postgresql://postgres.zghxlbcgyvjfwmuhxiqr:provaProva!23@aws-0-us-west-1.pooler.supabase.com:6543/postgres?client_encoding=utf8"
 db_name = "vectordb"
 
 Settings.chunk_size = 4096
@@ -56,6 +57,7 @@ def parse_json_list(value, key='name'):
 def load_and_persist_dataset(csv_path):
     # First, get existing document IDs from the database
     conn = psycopg2.connect(connection_string)
+    conn.set_client_encoding('UTF8')
     cursor = conn.cursor()
     documents = []
     
@@ -92,7 +94,6 @@ def load_and_persist_dataset(csv_path):
             popularity = safe_float(row.get('popularity'))
             
             try:
-                tags = parse_json_list(row.get('production_companies'))
                 production_companies = parse_json_list(row.get('production_companies'))
                 release_date = datetime.strptime(row.get('release_date', ''), '%Y-%m-%d').date() if row.get('release_date') else None
             except (ValueError, SyntaxError):
@@ -101,8 +102,8 @@ def load_and_persist_dataset(csv_path):
                 release_date = None
             
             # Compute embedding
-            combined_text = create_combined_text(title, overview, release_date, tags, production_companies)
-            embedding = Settings.embed_model.get_text_embedding(combined_text)
+            combined_text = create_combined_text(title, overview, release_date, production_companies)
+            # embedding = Settings.embed_model.get_text_embedding(combined_text)
             
             # Insert metadata
             cursor.execute(
